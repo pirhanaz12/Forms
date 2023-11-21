@@ -1,0 +1,113 @@
+<html>
+        <body><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Sign In</h1>
+    <form id="login-form">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+      <br>
+      <br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+      <br>
+      <br>
+      <button type="submit">Sign In</button>
+    </form>
+    <p id="message"></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+</body>
+        <style>body {
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+}
+
+label,
+input,
+button {
+  display: block;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+body{
+  background-image:url(https://images.pexels.com/photos/462234/pexels-photo-462234.jpeg?cs=srgb&dl=sky-night-clouds-462234.jpg&fm=jpg);
+   background-size:cover;
+                    background-attachment:fixed;
+
+}
+
+#message {
+  text-align: center;
+  margin-top: 10px;
+}
+</style>
+        <script>document.getElementById("login-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+
+  // Basic client-side validation (you can add more robust validation)
+  if (!username || !password) {
+    document.getElementById("message").innerText = "Please fill in all fields.";
+    return;
+  }
+
+  try {
+    // Send AJAX request to the server for authentication
+    const response = await fetch("/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      // Redirect to another page upon successful login
+      window.location.href = "https://en.wikipedia.org/wiki/Flower"; // Replace "welcome.html" with the URL of the target page
+    } else {
+      document.getElementById("message").innerText = "Invalid username or password.";
+    }
+  } catch (error) {
+    console.error("Error occurred:", error);
+    document.getElementById("message").innerText = "An error occurred. Please try again later.";
+  }
+});
+
+
+</script>
+      </html>
